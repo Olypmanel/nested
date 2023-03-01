@@ -1,0 +1,13 @@
+do (
+    declare(arr, array("Emmanuel", "Segun")),
+    declare(counter, 0), 
+    while(<(counter, len(arr)), 
+        do( 
+            print(elem(arr, counter)), 
+            +=(counter, 1)
+    )
+    )
+)
+/WRITE YOUR CODE/
+
+

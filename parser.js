@@ -1,4 +1,6 @@
-const skipSpace = program => program.replace(/^(\s+|#.*|\/[^/]*\/|\/\/.*)/, ""); //IGNORE WHITE SPACE AND COMMENTS
+const skipSpace = program => program.replace(/^\s+/, "")
+    .replace(/(#.*|\/[^/]*\/)/g, '');
+//IGNORE WHITE SPACE AND COMMENTS
 const parseExpression = program => {
     program = skipSpace(program);
     let match, expr;
