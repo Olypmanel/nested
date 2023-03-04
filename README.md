@@ -5,7 +5,7 @@ It has a unique syntax in that:
 1. All it built-in operators are mostly functions
 2. The functions can be nested arbitrarily
 ## Rules and syntax
--[] There is no type changes in nested programming language  
+	There is no type changes in nested programming language  
 as in true is not equal to 1. where a true is expected truthy value can't be used.
 
 ## The built-in functions and keywords and their operations
