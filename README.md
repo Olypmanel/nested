@@ -77,7 +77,7 @@ The while function is like Javscript **do while loop ** but inverted i.e it's mo
    do(
        def(sqr, func(a, b, *(a, b))),
        declare(counter, 0),
-       declare(str, "")
+       declare(str, ""),
        declare(arr, arr("Emmanuel ", "Segun ", "Seun ")),
        while(
            !=(counter, len(arr) ), //true, then false later
@@ -85,7 +85,7 @@ The while function is like Javscript **do while loop ** but inverted i.e it's mo
                +=(str, elem(arr, counter),
                +=(counter, 1)
 )),
-       print(str) //Emmanuel Segun Seun
+       print(str), //Emmanuel Segun Seun
        if (
             ==(counter, len(arr)), // true
             print(sqr(counter, len(arr))), // 9
@@ -94,3 +94,5 @@ The while function is like Javscript **do while loop ** but inverted i.e it's mo
 )
 )
 ```
+### print()
+using print is the only way to write to the console and to debug 
