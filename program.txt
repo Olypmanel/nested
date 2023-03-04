@@ -1,12 +1,13 @@
 do (
-    declare(arr, array("Emmanuel", "Segun")),
+    def(pri, func(a, i, print(elem(arr, i)))),
+    declare(arr, array("Emmanuel", "Segun", "Olypmanel@gmail.com")),
     declare(counter, 0), 
     while(<(counter, len(arr)), 
         do( 
-            print(elem(arr, counter)), 
+            pri(arr, counter), 
             +=(counter, 1)
     )
-    )
+    ),
 )
 /WRITE YOUR CODE/
 

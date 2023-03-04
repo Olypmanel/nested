@@ -58,16 +58,19 @@ builtin.if = (args, scope) => { // THIS MORE OF TERNARY OPERATOR RATHER THAN REG
 
 builtin.declare = (args, scope) => { // DECLARE AVARIABLE NOT IN SCOPE INITIALLY
     class DefineError extends Error { }
-    const { type, name, value } = args[0];
+
+    const { type, name, value } = args[0],
+        data = evaluate(args[1], scope);
     if (args.length !== 2)
         throw new ArgumentError("declare expects two arguments. first is identifier second is the value");
-    if (type !== "identifier")
+    else if (type !== "identifier")
         throw new DefineError(`"${value}" is not a valid name for declare`);
     else if (name in builtin || operators.indexOf(name) > -1)
         throw new DefineError(`${name} is keyword. Cannot declare with a keyword`);
     else if (name in scope)
         throw new DefineError(`${name} has already been declared. Use redeclare instead`);
-    else return scope[name] = evaluate(args[1], scope);
+    else if (typeof data == "function") throw new ArgumentError("declare cannot define a function use def instead");
+    else return scope[name] = data;
 };
 
 
@@ -91,8 +94,15 @@ builtin.while = (args, scope) => { // WHILE WITH DO DOES WHAT REGUALAR WHILE WHI
     else throw new TypeError("While expects a Boolean as first arg");
     return false;
 };
+builtin.def = (args, scope) => {
+    const [name, value] = [args[0].name, evaluate(args[1], scope)];
+    if (args.length !== 2) throw new ArgumentError("create expects two arguments");
+    else if (typeof value != "function") throw new TypeError("create only accepts functions as second argument");
+    else if (!name) throw new ArgumentError("Create requires an identifier as first argument");
+    else scope[name] = value;
 
-builtin.fun = (args, scope) => { // DECLARES A FUNCTION
+};
+builtin.func = (args, scope) => { // DECLARES A FUNCTION
     class ParameterError extends Error { }
     if (!args.length)
         throw new ArgumentError(`Supply the executable code as the last argument. The rests are the parameters to the defined function`);
