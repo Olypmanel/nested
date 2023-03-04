@@ -13,18 +13,26 @@ Infact all our entire program must be wrapped  in a do built-in function.
 
 ```js
   do(
-  decalre(greet, "Hello world"),
-  print(greet) /* Hello World*/
+  declare(greet, "Hello world"),
+  print(greet) /*Hello World*/
   )
 ```
 ### declare()
 Declare defines or a declare a variable. It takes two arguments. An identifier and a value literal respectively  decl
 It can not be used to change the value of an existing variable though it will throw a DeclarationError. Use **redecare()** intead.
-```
+```js
 do (
 declare(arr, array(1,2,3,4,5)),
-declare(arr, "Bonjour") /* DeclarationError*/
+print(arr), /*[1,2,3,4,5]*/
+redeclare(arr, "Bonjour") /*Bonjour*/
 )
 ```
-### redeclare()
-redclare reassigns 
+## def and func
+Def defines functions. Def is similar to decalare but can only take a function declaration as second arguments  
+func takes any number of arguments the last argument is taken as the function body, while the rests as the function parameters
+```js
+    do(
+    def(sum, func(a,b, +(a,b))),
+    print(sum(2, 4)) /* 6*/
+    )
+```
