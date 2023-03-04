@@ -4,8 +4,11 @@ This is a langauge that is built on top of javascript core language
 It has a unique syntax in that:
 1. All it built-in operators are mostly functions
 2. The functions can be nested arbitrarily
+## Rules and syntax
+-[] There is no type changes in nested programming language  
+as in true is not equal to 1. where a true is expected truthy value can't be used.
 
-## The built-in functions and their operations
+## The built-in functions and keywords and their operations
 
 ### do()
 Do is a wrapper around our entire program. It can take any number of arguments.  
@@ -69,7 +72,7 @@ The elem returns the element or value at specified index or key respectively
      elem(arr, 0) //2
 )
 ```
-### Conditional and iteration function ==> if() and while() functions  
+### Conditional and iterational functions ==> if() and while() functions  
 if works just like javascript ternary operators. It takes three arguments, if the first is true it evaluate and returns the second else the third argument
 while takes two arguments if the while the first argument is true the loop runs the body must be wrapped in **do** function if more than one expression   
 The while function is like Javscript **do while loop ** but inverted i.e it's more like **while do loop** in nested programming language
@@ -78,7 +81,7 @@ The while function is like Javscript **do while loop ** but inverted i.e it's mo
        def(sqr, func(a, b, *(a, b))),
        declare(counter, 0),
        declare(str, ""),
-       declare(arr, arr("Emmanuel ", "Segun ", "Seun ")),
+       declare(arr, array("Emmanuel ", "Segun ", "Seun ")),
        while(
            !=(counter, len(arr) ), //true, then false later
             do(
@@ -96,3 +99,5 @@ The while function is like Javscript **do while loop ** but inverted i.e it's mo
 ```
 ### print()
 using print is the only way to write to the console and to debug 
+### true and false
+true and false works just like expected.
