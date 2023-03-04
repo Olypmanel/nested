@@ -27,12 +27,24 @@ print(arr), /*[1,2,3,4,5]*/
 redeclare(arr, "Bonjour") /*Bonjour*/
 )
 ```
-## def and func
+### def() and func()
 Def defines functions. Def is similar to decalare but can only take a function declaration as second arguments  
 func takes any number of arguments the last argument is taken as the function body, while the rests as the function parameters
 ```js
     do(
-    def(sum, func(a,b, +(a,b))),
+    def(sum, func(a,b, +(a,b)  )  ),
     print(sum(2, 4)) /* 6*/
+    )
+```
+### Mathematical operators --> -(), +(), /(), <code>*()</code> <code>**()</code> +=(), -=()
+These mathematical operators are binary operators i.e they all take two arguments
+**=+()** and **-=()** are incremental and decremental operators. They both perform inplace change, so both requires a defined name as first argument and a number as seconds argument
+```js
+    do(
+        declare(num, 0),
+        +=(num, 1),     /*1*/
+        +=(num, 5),     /*6*/
+        +(4, -(5, 1)  ), /* 8*/
+        /(num, 3)       /*2*/
     )
 ```
