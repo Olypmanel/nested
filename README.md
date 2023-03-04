@@ -5,9 +5,16 @@ It has a unique syntax in that:
 1. All it built-in operators are mostly functions
 2. The functions can be nested arbitrarily
 ## Rules and syntax
-.There is no type changes in nested programming language  
+- There are no types change in nested programming language  
 as in true is not equal to 1. where a true is expected truthy value can't be used.  
-
+- If the program is more than one line, it must be wrapped by **do** function  
+- You cannot provide less or more arguments than necessary ths will throw an argumemtError  
+- Each expression must be an argument to other funtion separated by a comma  
+- **declare** declares variable but cannot declare a function, use **def** instead  
+- **declare** cannot define already decared variable use **redeclare** insead
+- nested ignores white space same way javascript does  
+- function definition must be defined with at least one argument which will be the function body else it throws argumentError
+- **/multi-line coment/** and **#in-line comment** 
 
 ## The built-in functions and keywords and their operations
 
@@ -22,7 +29,7 @@ Infact all our entire program must be wrapped  in a do built-in function.
   )
 ```
 ### declare()
-Declare defines or a declare a variable. It takes two arguments. An identifier and a value literal respectively  decl
+Declare defines or declare a variable. It takes two arguments. An identifier and a value literal respectively  decl
 It can not be used to change the value of an existing variable though it will throw a DeclarationError. Use **redecare()** intead.
 ```js
 do (
@@ -81,15 +88,15 @@ The while function is like Javscript **do while loop ** but inverted i.e it's mo
    do(
        def(sqr, func(a, b, *(a, b))),
        declare(counter, 0),
-       declare(str, ""),
+       declare(name, ""),
        declare(arr, array("Emmanuel ", "Segun ", "Seun ")),
        while(
            !=(counter, len(arr) ), //true, then false later
             do(
-               +=(str, elem(arr, counter),
+               +=(name, elem(arr, counter),
                +=(counter, 1)
 )),
-       print(str), //Emmanuel Segun Seun
+       print(name), //Emmanuel Segun Seun
        if (
             ==(counter, len(arr)), // true
             print(sqr(counter, len(arr))), // 9
@@ -101,4 +108,4 @@ The while function is like Javscript **do while loop ** but inverted i.e it's mo
 ### print()
 using print is the only way to write to the console and to debug 
 ### true and false
-true and false works just like expected.
+true and false works just like expected. Except there is mo type changes
