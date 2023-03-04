@@ -4,9 +4,14 @@ This is a langauge that is built on top of javascript core language
 It has a unique syntax in that:
 1. All it built-in operators are mostly functions
 2. The functions can be nested arbitrarily
-## Rules and syntax
-- There are no types change in nested programming language  
-as in true is not equal to 1. where a true is expected truthy value can't be used.  
+
+## How to set up nested programming language
+1. Run **git pull https://github.com/olypmanel/nested.git master**
+2. Then run **npm install**
+3. Then run yet again **npm run start**
+4. Then open the **program.txt** file and start coding nested. Happy hacking.
+## Rules and syntax of nested programming language
+- There are no types change in nested programming language as in true is not equal to 1. where a true is expected truthy value can't be used.  
 - If the program is more than one line, it must be wrapped by **do** function  
 - You cannot provide less or more arguments than necessary ths will throw an argumemtError  
 - Each expression must be an argument to other funtion separated by a comma  
@@ -14,7 +19,7 @@ as in true is not equal to 1. where a true is expected truthy value can't be use
 - **declare** cannot define already decared variable use **redeclare** insead
 - nested ignores white space same way javascript does  
 - function definition must be defined with at least one argument which will be the function body else it throws argumentError
-- **/multi-line coment/** and **#in-line comment** 
+- **/ multi-line coment /** and **# in-line comment** // and # are multiline and inline comment respectively
 
 ## The built-in functions and keywords and their operations
 
@@ -47,7 +52,7 @@ func takes any number of arguments the last argument is taken as the function bo
     	print(sum(2, 4)) /* 6*/
     )
 ```
-### Mathematical operators ==> <code>-(), +(), /(), *(), **(), +=(), -=()</code>
+### Mathematical operators ==> <code>-(), +(), /(), *(), **(), +=(), -=(), %(), </code>
 These mathematical operators are binary operators i.e they all take two arguments
 **=+()** and **-=()** are incremental and decremental operators. They both perform inplace change, so both requires a defined name as first argument and a number as seconds argument
 ```js
@@ -59,14 +64,14 @@ These mathematical operators are binary operators i.e they all take two argument
         /(num, 3)       /*2*/
     )
 ```
-### Comparison operators ==>  <code> >(), >=(), ==(), !=(), <(), <=() </code>
-Like the mathematical operators, tjese operators are binary operators. But they return Booleans, (true or false)
+### Comparison operators ==>  <code> >(), >=(), ===(), !==(), <(), <=() </code>
+Like the mathematical operators, these operators are binary operators. But they return Booleans, (true or false)
 ```js
 
   do(
       >(2, 1) /* true*/
       <(2,1) /* false*/
-      ==(2, "2") /*false, there is no type conversion*/
+      ===(2, "2") /*false, there is no type conversion*/
   )
 ```
 ### array(), len(), elem() 
@@ -81,9 +86,9 @@ The elem returns the element or value at specified index or key respectively
 )
 ```
 ### Conditional and iterational functions ==> if() and while() functions  
-if works just like javascript ternary operators. It takes three arguments, if the first is true it evaluate and returns the second else the third argument
-while takes two arguments if the while the first argument is true the loop runs the body must be wrapped in **do** function if more than one expression   
-The while function is like Javscript **do while loop ** but inverted i.e it's more like **while do loop** in nested programming language
+**if** works just like javascript ternary operators. It takes three arguments, if the first is true it evaluate and returns the second else the third argument
+**while** takes two arguments if the while the first argument is true the loop runs the body must be wrapped in **do** function if more than one expression   
+The **while** function is like Javscript **do while loop ** but inverted i.e it's more like **while do loop** in nested programming language
 ```js
    do(
        def(sqr, func(a, b, *(a, b))),
@@ -91,7 +96,7 @@ The while function is like Javscript **do while loop ** but inverted i.e it's mo
        declare(name, ""),
        declare(arr, array("Emmanuel ", "Segun ", "Seun ")),
        while(
-           !=(counter, len(arr) ), //true, then false later
+           !==(counter, len(arr) ), //true, then false later
             do(
                +=(name, elem(arr, counter),
                +=(counter, 1)
