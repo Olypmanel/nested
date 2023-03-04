@@ -1,0 +1,24 @@
+{
+  "name": "nested_programming_language",
+  "version": "1.0.0",
+  "description": "This is a langauge that is built on top of javascript core language  \r It has a unique syntax in that:\r 1. All it built-in operators are mostly functions\r 2. The functions can be nested arbitrarily",
+  "main": "nested.js",
+  "dependencies": {
+    "nodemon": "2.0.20"
+  },
+  "scripts": {
+    "test": "echo \"Error: no test specified\" && exit 1",
+    "start": "nodemon ./nested.js"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/olypmanel/nested.git"
+  },
+  "keywords": [],
+  "author": "Emmanuel Segun",
+  "license": "ISC",
+  "bugs": {
+    "url": "https://github.com/olypmanel/nested/issues"
+  },
+  "homepage": "https://github.com/olypmanel/nested#readme"
+}

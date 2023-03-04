@@ -56,7 +56,7 @@ builtin.if = (args, scope) => { // THIS MORE OF TERNARY OPERATOR RATHER THAN REG
 
 
 
-builtin.declare = (args, scope) => { // DECLARE AVARIABLE NOT IN SCOPE INITIALLY
+builtin.declare = (args, scope) => { // DECLARE AVARIABLE NOT IN SCOPE INITIALLY`
     class DefineError extends Error { }
 
     const { type, name, value } = args[0],
@@ -148,6 +148,4 @@ builtin.elem = (args, scope) => { // TO GET THE ELEMENT OF SEQUENCE
         throw new IndexError(`This sequence has index or key of ${arr.length - 1} as max. It's not up to ${index}`);
     return element;
 };
-
-// export default evaluate;
 module.exports = evaluate;
