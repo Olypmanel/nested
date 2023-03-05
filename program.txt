@@ -1,5 +1,6 @@
 do (
     def(pri, func(a, i, print(elem(arr, i)))),
+    declare(name, "bob"),
     declare(arr, array("Emmanuel", "Segun", "Olypmanel@gmail.com")),
     declare(counter, 0), 
     while(<(counter, len(arr)), 
@@ -8,6 +9,7 @@ do (
             +=(counter, 1)
     )
     ),
+    print(builtin()),
 )
 /WRITE YOUR CODE/
 

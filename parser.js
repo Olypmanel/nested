@@ -6,7 +6,7 @@ const parseExpression = program => {
     let match, expr;
     if (match = program.match(/^"([^"]*)"/))// GIVES SUPPORT FOR MULTIPLE AND SINGLE LINE STRINGS WRAPPED AROUND DOUBLE QUOTES
         expr = { type: "value", value: match[1] };
-    else if (match = program.match(/^-?\d+/)) // GIVE SUPPORT TO INTEGER LITERALS
+    else if (match = program.match(/^(-|\+)?\d*\.?\d*\d+/)) // GIVE SUPPORT TO INTEGER LITERALS
         expr = { type: "value", value: Number(match[0]) };
     else if (match = program.match(/^[^,()"\s]+/)) // GIVE SUPPORT TO VARIABLES
         expr = { type: "identifier", name: match[0] };

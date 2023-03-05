@@ -29,6 +29,10 @@ function evaluate(expr, scope) {
 
 
 class ArgumentError extends Error { }
+class IndexError extends Error { }
+class DefineError extends Error { }
+class RedeclareError extends Error { }
+class ParameterError extends Error { }
 
 const operators = ['+', "-", "%", "/", "*", "**", "===", "!==", ">", '>=', "<", "<="];
 builtin.do = (args, scope) => args.map(arg => evaluate(arg, scope))[args.length - 1]; // OUR PROGRAM WRAPPER
@@ -57,7 +61,6 @@ builtin.if = (args, scope) => { // THIS MORE OF TERNARY OPERATOR RATHER THAN REG
 
 
 builtin.declare = (args, scope) => { // DECLARE AVARIABLE NOT IN SCOPE INITIALLY`
-    class DefineError extends Error { }
 
     const { type, name, value } = args[0],
         data = evaluate(args[1], scope);
@@ -75,7 +78,6 @@ builtin.declare = (args, scope) => { // DECLARE AVARIABLE NOT IN SCOPE INITIALLY
 
 
 builtin.redeclare = (args, scope) => { // REDECLARE AN EXISTING VARIABLE
-    class RedeclareError extends Error { }
     const { name } = args[0];
     if (args.length !== 2)
         throw new ArgumentError("redeclare expects two arguments. First is identifier, Second is the value");
@@ -85,11 +87,11 @@ builtin.redeclare = (args, scope) => { // REDECLARE AN EXISTING VARIABLE
 };
 
 
-builtin.while = (args, scope) => { // WHILE WITH DO DOES WHAT REGUALAR WHILE WHILE DOES
+builtin.while = (args, scope) => { // WHILE STATEMENT WITH DO STATEMENT DOES WHAT REGUALAR WHILE LOOP DOES
     if (args.length !== 2)
         new ArgumentError("While expects two arguments. Repeat second as long as first is true");
     const arg = evaluate(args[0], scope);
-    if (arg === false || arg === true)
+    if (arg === false || arg === true) // TO MAKE SURE THAT THERE ARE NO TYPE CONVERSION
         while (evaluate(args[0], scope) === true) evaluate(args[1], scope);
     else throw new TypeError("While expects a Boolean as first arg");
     return false;
@@ -103,7 +105,6 @@ builtin.def = (args, scope) => {
 
 };
 builtin.func = (args, scope) => { // DECLARES A FUNCTION
-    class ParameterError extends Error { }
     if (!args.length)
         throw new ArgumentError(`Supply the executable code as the last argument. The rests are the parameters to the defined function`);
     const body = args[args.length - 1];
@@ -137,15 +138,63 @@ builtin.len = (args, scope) => { // RETURNS LENGTH OF A SEQUENCE
     return arg.length;
 };
 
+builtin.in = (args, scope) => {
+    if (args.length != 2) throw new ArgumentError('in operator expects two arguments');
+    const value = evaluate(args[1], scope), keyIndex = evaluate(args[0], scope);
+    return keyIndex in value;
+};
 
 builtin.elem = (args, scope) => { // TO GET THE ELEMENT OF SEQUENCE
-    class IndexError extends Error { }
     const index = evaluate(args[1], scope), arr = evaluate(args[0], scope);
     const element = arr[index];
-    if (typeof arr != 'object' && typeof arr != "string")
-        throw new IndexError(`This operation is not supported on ${args[0].valueType}`);
-    else if (element === undefined)
+    // if (typeof arr != 'object' && typeof arr != "string")
+    //     throw new IndexError(`This operation is not supported on ${args[0].valueType}`);
+    if (element === undefined)
         throw new IndexError(`This sequence has index or key of ${arr.length - 1} as max. It's not up to ${index}`);
     return element;
+};
+builtin.push = (args, scope) => {
+    if (args.length < 2) throw new ArgumentError('Push expects at least two arguments');
+    const array = evaluate(args[0], scope);
+    if (!Array.isArray(array)) throw new TypeError('first argument of push must be an array');
+    else array.push(...args.splice(1).map(v => evaluate(v, scope)));
+    return false;
+};
+builtin.pop = (args, scope) => {
+    if (args.length >= 3) throw new ArgumentError('Push expects two arguments at the most');
+    const array = evaluate(args[0], scope),
+        index = (args[1] && evaluate(args[1], scope)) ?? array.length - 1;
+    if (!Array.isArray(array)) throw new TypeError('first argument of push must be an array');
+    else {
+        if (!Number.isInteger(index)) throw new ArgumentError('an integer as epected for pop');
+        const spl = array.splice(index, 1)[0];
+        if (spl === undefined) throw new IndexError("can't pop from empty list");
+        else return spl;
+    }
+};
+builtin.bool = (args, scope) => {
+    if (args.length > 1) throw new ArgumentError('bool operator expects only one argument');
+    return Boolean(evaluate(args[0], scope));
+};
+
+builtin.str = (args, scope) => {
+    if (args.length > 1) throw new ArgumentError('str takes only one argument');
+    const value = evaluate(args[0], scope);
+    if (Array.isArray(value)) return value.join` `;
+    else if (typeof value == "object") return '[obj, Dictionary]';
+    else return String(value);
+};
+builtin.num = (args, scope) => {
+    if (args.length != 1) throw new ArgumentError("num requires only one argument");
+    let value = evaluate(args[0], scope);
+    const num = Number(value);
+    if (Number.isNaN(num)) throw new ArgumentError(`can not parse ${value} into a number`);
+    return num;
+};
+builtin.builtin = () => {
+    const arr = [true, false];
+    for (const built in builtin) built != 'builtin' && arr.push(built);
+    for (const oper of operators) arr.push(oper);
+    return arr.sort();
 };
 module.exports = evaluate;
