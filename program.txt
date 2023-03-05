@@ -10,6 +10,11 @@ do (
     )
     ),
     print(builtin()),
+    print(+(4, 3 , -(5, 1, 2)  ), "Emmanuel Kayode"),
+    def(
+        op, func(a, b, func(C,+(a, b,C)) )
+    ),
+    print(op(10, 50)(5))
 )
 /WRITE YOUR CODE/
 

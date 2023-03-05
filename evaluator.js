@@ -13,7 +13,22 @@ function evaluate(expr, scope) {
         if (name in builtin) return builtin[name](args, scope);
         else if (name in scope && typeof scope[name] == "function")
             return scope[name](...args.map(arg => evaluate(arg, scope)));
-        else throw new SyntaxError(`${name} is not invocable`);
+        else { // THEN THE INVOCATION IS IN CLOSURE i.E FUN()(). USING STACK (LIFO)
+            let operator = expr.operator;
+            const allArgs = [expr.args];
+            while (!operator.name) {
+                allArgs.push(operator.args); //LAST IN 
+                operator = operator.operator;
+            }
+            let operate = scope[operator.name];
+            if (!(operator.name in scope)) throw new ReferenceError(`${operator.name} is not defined`)
+            while (allArgs.length) {
+                if (typeof operate == "function")
+                    operate = operate(...allArgs.pop().map(arg => evaluate(arg, scope))); // FIRST OUT
+                else throw new InvocationError(`${operate} is not invocable`);
+            }
+            return operate;
+        }
     }
 }
 
@@ -27,7 +42,7 @@ function evaluate(expr, scope) {
 
 // THIS PART OUGHT TO BE IN ANOTHER MODULE. BUT I HAD PROBLEM WITH IT. PROBLABLY BECAUSE CIRCULAR EXPORT OF MODULES
 
-
+class InvocationError extends Error { }
 class ArgumentError extends Error { }
 class IndexError extends Error { }
 class DefineError extends Error { }
@@ -78,12 +93,14 @@ builtin.declare = (args, scope) => { // DECLARE AVARIABLE NOT IN SCOPE INITIALLY
 
 
 builtin.redeclare = (args, scope) => { // REDECLARE AN EXISTING VARIABLE
-    const { name } = args[0];
+    const { name } = args[0], keyWord = [true, false, "print"];
     if (args.length !== 2)
-        throw new ArgumentError("redeclare expects two arguments. First is identifier, Second is the value");
-    else if (operators.indexOf(name) > -1) throw new RedeclareError("Cannot Redeclare an Operator");
-    else if (name in scope) return scope[name] = evaluate(args[1], scope);
-    else throw new RedeclareError(`${name} is not declared. Cannot redeclare an undeclared name`);
+        throw new ArgumentError("redeclare expects two arguments. First is an identifier, Second is the value");
+    else if (!(name in scope))
+        throw new RedeclareError(`${name} is not declared. Cannot redeclare an undeclared name`);
+    else if (operators.indexOf(name) > -1 || keyWord.indexOf(name) > -1 || name in builtin)
+        throw new RedeclareError("Cannot Redeclare an Operator and keywords");
+    else return scope[name] = evaluate(args[1], scope);
 };
 
 
@@ -98,10 +115,11 @@ builtin.while = (args, scope) => { // WHILE STATEMENT WITH DO STATEMENT DOES WHA
 };
 builtin.def = (args, scope) => {
     const [name, value] = [args[0].name, evaluate(args[1], scope)];
-    if (args.length !== 2) throw new ArgumentError("create expects two arguments");
-    else if (typeof value != "function") throw new TypeError("create only accepts functions as second argument");
-    else if (!name) throw new ArgumentError("Create requires an identifier as first argument");
+    if (args.length !== 2) throw new ArgumentError("Def expects two arguments");
+    else if (typeof value != "function") throw new TypeError("Def only accepts functions as second argument");
+    else if (!name) throw new ArgumentError("Def requires an identifier as first argument");
     else scope[name] = value;
+    return value;
 
 };
 builtin.func = (args, scope) => { // DECLARES A FUNCTION
@@ -192,7 +210,7 @@ builtin.num = (args, scope) => {
     return num;
 };
 builtin.builtin = () => {
-    const arr = [true, false];
+    const arr = [true, false, "print"];
     for (const built in builtin) built != 'builtin' && arr.push(built);
     for (const oper of operators) arr.push(oper);
     return arr.sort();

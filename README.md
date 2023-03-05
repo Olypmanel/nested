@@ -46,7 +46,7 @@ These function behaves same way the python __dir__ function behaves. It prints a
 
 ```js builtin()```
 
-### do()
+### program wrapper ===> do()
 __Do__ is a wrapper around our entire program. It can take any number of arguments.  
 Infact all our entire program must be wrapped  in a do built-in function.
 
@@ -56,7 +56,7 @@ Infact all our entire program must be wrapped  in a do built-in function.
   	print(greet) /*Hello World*/
   )
 ```
-### declare()
+### varible declaration and re-assigning ===> declare(), redeclare()
 __Declare__ defines or declare a variable. It takes two arguments. An identifier and a value literal respectively 
 It can not be used to change the value of an existing variable though it will throw a DeclarationError. Use __redecare()__ intead.
 ```js
@@ -66,29 +66,35 @@ do (
 	redeclare(arr, "Bonjour") /*Bonjour*/
 )
 ```
-### def() and func()
+### function declaration ===> def() and func()
 __Def__ defines functions. Def is similar to decalare but can only take a function declaration as second arguments  
-func takes any number of arguments the last argument is taken as the function body, while the rests as the function parameters
+__func__ takes any number of arguments the last argument is taken as the function body, while the rests as the function parameters  
+__Functions__ can be nested arbitrarily in other functions. Anonymous functions can only occur in other function for now.
+__closures__ are also implement in nested programming language
 ```js
     do(
-    	def(sum, func(a,b, +(a,b)  )  ),
-    	print(sum(2, 4)) /* 6*/
+    	def(sum, func(a, b, +(a, b)  )  ),
+    	print(sum(2, 4)),/* 6*/
+        def(nest, func(a, b, func(c,  +(a, b, c)) ) ),
+        print(nest(10, 10)(10) ) /*30 closures are also implemented*/
     )
 ```
 ### Mathematical operators ==> <code>__-(), +(), /(), *(), **(), +=(), -=(), %(),__ </code>
-These mathematical operators are binary operators i.e they all take two arguments
-__=+()__ and __-=()__ are incremental and decremental operators. They both perform inplace change, so both requires a defined name as first argument and a number as seconds argument
+These mathematical operators except __+=()__ and __-=()__ take any number of arguments.
+__+=()__ and __-=()__ are incremental and decremental operators. They both perform inplace change, so both requires a defined name as first argument and a number as seconds argument
 ```js
     do(
         declare(num, 0),
         +=(num, 1),     /*1*/
         +=(num, 5),     /*6*/
-        +(4, -(5, 1)  ), /* 8*/
+        +(4, 3 , -(5, 1, 2)  ), /* 4 + 3 + (5 - 1 - 2) == 7 + 2 == 9 */
         /(num, 3)       /*2*/
     )
 ```
 ### Comparison operators ==>  <code> >(), >=(), ===(), !==(), <(), <=() </code>
-Like the mathematical operators, these operators are binary operators. But they return Booleans, (true or false)
+Like the mathematical operators. They can take any number of arguments but these. 
+But it is better to use them as binary operators. 
+And they always return Booleans: (true or false).
 ```js
 
   do(
@@ -97,7 +103,7 @@ Like the mathematical operators, these operators are binary operators. But they 
       ===(2, "2") /*false. There is no type conversion*/
   )
 ```
-### array(), len(), elem(), in()
+### working with lists and sequence ===> array(), len(), elem(), in()
 The __array__ built in takes any nber of argument, and returns an array of the arguments 
 
 The __len__ built in returns the length of any sequence be it string or array it takes just one argument  
@@ -117,7 +123,7 @@ The __elem__ returns the element or value at specified index or key respectively
      )
 )
 ```
-### pop() and push()
+### implementing stacks ====> pop() and push()
 __push__ works just same way it does in javascript, only that in nested language the first argument must reference the array to push to. The rest arguments are push to this array in the order they occur. 
 
 __pop__ by default removes the last element. It takes two arguments. the first argument reference the array. And the optional second argument states which index __pop__ should pop from.
@@ -179,8 +185,9 @@ __bool__ converts all value types to a __boolean__ i.e __true__ or __false__.
     )
 ```
 
-### print()
+### debugging ===> print()
 
-using print is the only way to write to the console and to debug 
-### true and false
-true and false works just like expected. Except there is mo type changes
+using print is the only way to write to the console and to debug.
+
+### Booleans ===> true and false
+true and false works just like expected. Except there is no type changes
