@@ -1,21 +1,66 @@
-do (
-    def(pri, func(a, i, print(elem(arr, i)))),
-    declare(name, "bob"),
-    declare(arr, array("Emmanuel", "Segun", "Olypmanel@gmail.com")),
-    declare(counter, 0), 
-    while(<(counter, len(arr)), 
-        do( 
-            pri(arr, counter), 
-            +=(counter, 1)
-    )
+do(
+    declare( matrix, array(
+        array(1, 2, 3, 4),
+        array(5, 6, 7, 8),
+        array(9, 10, 11, 12), 
+        array(13, 14, 15, 16)
+    )),
+    declare(spread, array()), 
+    declare(top, false),
+    declare(bottom, false),
+    declare(rCount, 0),
+    declare(lCount, false),
+    while(
+        bool(len(matrix)), 
+        do (
+            redeclare(top, pop(matrix, 0)),
+            while( # TOP OF THE MATRIX
+                bool(len(top)),
+                push(spread, pop(top, 0))
+            ),
+            while( # RIGHT SIDE OF THE MATRIX
+                !==(len(matrix), rCount),
+                do(
+                    push(spread, pop(elem(matrix, rCount))),
+                    +=(rCount, 1)
+                )
+            ),
+            redeclare(bottom, pop(matrix)),
+            while( # BOTTOM OF THE MATRIX
+                bool(len(bottom)),
+                push(spread, pop(bottom))
+            ),
+
+            redeclare(rCount, 0),
+            redeclare(lCount, -(len(matrix) , 1)),
+            while( # LEFT SIDE OF THE MATRIX
+                >=(lCount, 0),
+                do(
+                   push(spread, pop(elem(matrix, lCount), 0)),
+                    -=(lCount, 1)
+                )
+            )   
+        )
     ),
-    print(builtin()),
-    print(+(4, 3 , -(5, 1, 2)  ), "Emmanuel Kayode"),
-    def(
-        op, func(a, b, func(C,+(a, b,C)) )
-    ),
-    print(op(10, 50)(5))
+    print(spread)
 )
-/WRITE YOUR CODE/
+/
+ INPUT ARRAY =  [
+                    [ 1, 2, 3, 4 ], 
+                    [ 5, 6, 7, 8 ],
+                    [ 9, 10, 11, 12 ],
+                    [ 13, 14, 15, 16 ]
+                ]
+
+OUTPUT ARRAY = [
+   1,  2,  3,  4, 8, 12,
+  16, 15, 14, 13, 9,  5,
+   6,  7, 11, 10
+]
+THE ABOVE CODE MAKES A SPIRAL OF THE INPUT ARRAY OF ARRAY
+
+THIS IS ONE OF THE NUMEROUS THINGS NESTED PROGRAMMING LANGUAGE CAN DO.
+            ELOQUENT JAVASCRIPT 😊
+/
 
 

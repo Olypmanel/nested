@@ -57,8 +57,14 @@ Infact all our entire program must be wrapped  in a do built-in function.
   )
 ```
 ### varible declaration and re-assigning ===> declare(), redeclare()
-__Declare__ defines or declare a variable. It takes two arguments. An identifier and a value literal respectively 
+__Declare__ defines or declare a variable. It takes two arguments. An identifier and a value literal respectively.
+
 It can not be used to change the value of an existing variable though it will throw a DeclarationError. Use __redecare()__ intead.
+
+Do not use __declare()__ inside a __while loop or function declaration__. Beacause it will run as trying to declare an already declared variable.
+
+Instead declare your variable outside a while loop or function. And use __parameters__ for functions or __redeclare()__ for both while loop and function declaration.
+
 ```js
 do (
 	declare(arr, array(1,2,3,4,5)),
@@ -68,8 +74,11 @@ do (
 ```
 ### function declaration ===> def() and func()
 __Def__ defines functions. Def is similar to decalare but can only take a function declaration as second arguments  
+
 __func__ takes any number of arguments the last argument is taken as the function body, while the rests as the function parameters  
+
 __Functions__ can be nested arbitrarily in other functions. Anonymous functions can only occur in other function for now.
+
 __closures__ are also implement in nested programming language
 ```js
     do(
@@ -81,7 +90,9 @@ __closures__ are also implement in nested programming language
 ```
 ### Mathematical operators ==> <code>__-(), +(), /(), *(), **(), +=(), -=(), %(),__ </code>
 These mathematical operators except __+=()__ and __-=()__ take any number of arguments.
-__+=()__ and __-=()__ are incremental and decremental operators. They both perform inplace change, so both requires a defined name as first argument and a number as seconds argument
+
+__+=()__ and __-=()__ are incremental and decremental operators respectively.  
+They both perform in-place changes, so both require a defined name as first argument and a number as seconds argument
 ```js
     do(
         declare(num, 0),
@@ -92,7 +103,7 @@ __+=()__ and __-=()__ are incremental and decremental operators. They both perfo
     )
 ```
 ### Comparison operators ==>  <code> >(), >=(), ===(), !==(), <(), <=() </code>
-Like the mathematical operators. They can take any number of arguments but these. 
+Like the mathematical operators. They can take any number of arguments.   
 But it is better to use them as binary operators. 
 And they always return Booleans: (true or false).
 ```js
@@ -180,7 +191,8 @@ __bool__ converts all value types to a __boolean__ i.e __true__ or __false__.
         declare(s, "34"),
         num(s), /*34*/
         redeclare(s, array("Bob", "is", "24")),
-        print(str(s)) /*Bob is 24*/
+        str(s), /*Bob is 24*/
+        bool(s) /*true*/
 
     )
 ```

@@ -18,10 +18,10 @@ function evaluate(expr, scope) {
             const allArgs = [expr.args];
             while (!operator.name) {
                 allArgs.push(operator.args); //LAST IN 
-                operator = operator.operator;
+                operator = operator.operator; // THIS IS A SINGLY LINK LISTS DATA STRUCTURE
             }
             let operate = scope[operator.name];
-            if (!(operator.name in scope)) throw new ReferenceError(`${operator.name} is not defined`)
+            if (!(operator.name in scope)) throw new ReferenceError(`${operator.name} is not defined`);
             while (allArgs.length) {
                 if (typeof operate == "function")
                     operate = operate(...allArgs.pop().map(arg => evaluate(arg, scope))); // FIRST OUT
@@ -140,14 +140,13 @@ builtin.func = (args, scope) => { // DECLARES A FUNCTION
 };
 
 
-builtin.array = (args, scope) => { // GIVES SUPPORT FOR ARRAY
-    if (!args.length) throw new ArgumentError(`Array expects at least one arguments`);
+builtin.array = (args, scope) => { // GIVES SUPPORT FOR ARRAYS
     return args.map(arg => evaluate(arg, scope));
 };
 
 
 builtin.len = (args, scope) => { // RETURNS LENGTH OF A SEQUENCE
-    if (args.length !== 1) throw new ArgumentError(`len expexcts one agrgument`);
+    if (args.length !== 1) throw new ArgumentError(`len expects one agument`);
     if (args.type == "identifier")
         return scope[args[0].name].length;
     const arg = evaluate(args[0], scope);
@@ -172,10 +171,11 @@ builtin.elem = (args, scope) => { // TO GET THE ELEMENT OF SEQUENCE
     return element;
 };
 builtin.push = (args, scope) => {
-    if (args.length < 2) throw new ArgumentError('Push expects at least two arguments');
     const array = evaluate(args[0], scope);
-    if (!Array.isArray(array)) throw new TypeError('first argument of push must be an array');
-    else array.push(...args.splice(1).map(v => evaluate(v, scope)));
+    if (args.length < 2) throw new ArgumentError('Push expects at least two arguments');
+    if (Array.isArray(array))
+        array.push(...args.slice(1).map(v => evaluate(v, scope)));
+    else throw new ArgumentError('Push expects an Array as first argumnent arguments');
     return false;
 };
 builtin.pop = (args, scope) => {
