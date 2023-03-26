@@ -10,7 +10,7 @@ It has a unique syntax in that:
 ---
 ## How to set up nested programming language
 
-1. Run __git pull https://github.com/olypmanel/nested.git master__
+1. Run __git pull https://github.com/olypmanel/nested.git__
 2. Then run __npm install__
 3. Then run yet again __npm run start__
 4. Then open the __program.txt__ file and start coding nested. Happy hacking.
